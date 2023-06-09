@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "538806960951",
+    "project_id": "two-be-wedd",
+    "storage_bucket": "two-be-wedd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538806960951:android:9892e4fe3ad234457bd0b2",
+        "android_client_info": {
+          "package_name": "com.example.two_be_wedd"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKg6qdG15jUwNuBN0cgmpt-CMPbp4mHK8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

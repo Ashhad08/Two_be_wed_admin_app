@@ -54,12 +54,14 @@ class _AppTextFieldState extends State<AppTextField> {
                   });
                 },
                 icon: obscureText
-                    ? const FaIcon(
+                    ? FaIcon(
                         FontAwesomeIcons.eyeSlash,
+                        color: context.colorScheme.primary,
                         size: 20,
                       )
-                    : const FaIcon(
+                    : FaIcon(
                         FontAwesomeIcons.eye,
+                        color: context.colorScheme.primary,
                         size: 20,
                       ))
             : const SizedBox(),

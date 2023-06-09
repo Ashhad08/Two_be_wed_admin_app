@@ -1,9 +1,13 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:two_be_wedd/utils/navigation_helper.dart';
 
-import '../login_view/login_view.dart';
+import '../../../infrastructure/services/splash_services.dart';
+import '../../../utils/navigation_helper.dart';
+import '../add_hall_view/add_hall_view.dart';
+import '../admin_auth_view/admin_auth_view.dart';
+import '../dashboard_view/dashboard_view.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -32,8 +36,28 @@ class _SplashViewBodyState extends State<SplashView> {
 
   _checkAdminLogin() {
     Timer(const Duration(seconds: 3), () async {
-      NavigationHelper.pushReplacement(context, LoginView());
-      // NavigationHelper.pushReplacement(context, const DashboardView());
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        bool isHallCreated = await SplashServices.isAdminCreatedHall();
+        if (isHallCreated) {
+          // ignore: use_build_context_synchronously
+          NavigationHelper.pushReplacement(
+            context,
+            const DashboardView(),
+          );
+        } else {
+          // ignore: use_build_context_synchronously
+          NavigationHelper.pushReplacement(
+            context,
+            const AddHallView(),
+          );
+        }
+      } else {
+        NavigationHelper.pushReplacement(
+          context,
+          const AdminAuthView(),
+        );
+      }
     });
   }
 }
