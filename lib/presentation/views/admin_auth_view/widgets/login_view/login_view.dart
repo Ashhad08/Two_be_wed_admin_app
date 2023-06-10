@@ -1,11 +1,11 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:two_be_wedd/infrastructure/services/admin_services.dart';
 import 'package:two_be_wedd/utils/extensions.dart';
 
 import '../../../../../configs/front_end_configs.dart';
 import '../../../../../infrastructure/providers/loading_helper.dart';
+import '../../../../../infrastructure/services/admin_services.dart';
 import '../../../../../infrastructure/services/auth_services.dart';
 import '../../../../../infrastructure/services/splash_services.dart';
 import '../../../../../utils/navigation_helper.dart';
@@ -136,8 +136,10 @@ class _LoginViewState extends State<LoginView> {
             // ignore: use_build_context_synchronously
             NavigationHelper.pushReplacement(
               context,
-              const DashboardView(),
+              DashboardView(),
             );
+            // ignore: use_build_context_synchronously
+            Utils.showSnackBar(context: context, message: "Welcome");
           } else {
             // ignore: use_build_context_synchronously
             NavigationHelper.pushReplacement(

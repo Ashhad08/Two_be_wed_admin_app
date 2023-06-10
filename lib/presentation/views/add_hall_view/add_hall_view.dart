@@ -96,6 +96,7 @@ class _AddHallViewState extends State<AddHallView> {
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4))),
                         onPressed: () {
@@ -134,6 +135,7 @@ class _AddHallViewState extends State<AddHallView> {
                             height: 100,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.zero,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(4))),
                               onPressed: () {
@@ -174,6 +176,7 @@ class _AddHallViewState extends State<AddHallView> {
                             height: 100,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.zero,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(4))),
                               onPressed: () {
@@ -214,6 +217,7 @@ class _AddHallViewState extends State<AddHallView> {
                             height: 100,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.zero,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(4))),
                               onPressed: () {
@@ -504,15 +508,14 @@ class _AddHallViewState extends State<AddHallView> {
             budget: num.parse(_photographyBudgetController.text.trim())));
       }
       await AdminServices()
-          .allHall(
+          .addHall(
               hallModel: HallModel(
                   name: _hallNameController.text.trim(),
                   description: _hallDescriptionController.text.trim(),
                   budget: num.parse(_hallBudgetController.text.trim()),
                   capacity: num.parse(_hallCapacityController.text.trim()),
                   address: _hallAddressController.text.trim(),
-                  phoneNumber:
-                      num.parse(_hallPhoneNumberController.text.trim()),
+                  phoneNumber: _hallPhoneNumberController.text.trim(),
                   firstImage: hallImages.firstImage!,
                   secondImage: hallImages.secondImage!,
                   thirdImage: hallImages.thirdImage!,
@@ -522,7 +525,8 @@ class _AddHallViewState extends State<AddHallView> {
               context: context)
           .then((value) {
         loadingProvider.stateStatus(StateStatus.IsFree);
-        NavigationHelper.pushReplacement(context, const DashboardView());
+        NavigationHelper.pushReplacement(context, DashboardView());
+        Utils.showSnackBar(context: context, message: "Welcome");
       }).onError((error, stackTrace) {
         loadingProvider.stateStatus(StateStatus.IsError);
         Utils.showSnackBar(

@@ -13,33 +13,33 @@ String hallModelToJson(HallModel data) =>
 
 class HallModel {
   String? hallId;
-  String adminId;
-  String name;
-  String description;
-  num budget;
-  num capacity;
-  String address;
-  num phoneNumber;
-  String firstImage;
-  String secondImage;
-  String thirdImage;
-  String fourthImage;
-  List<ExtraService> extraServices;
+  String? adminId;
+  String? name;
+  String? description;
+  num? budget;
+  num? capacity;
+  String? address;
+  String? phoneNumber;
+  String? firstImage;
+  String? secondImage;
+  String? thirdImage;
+  String? fourthImage;
+  List<ExtraService>? extraServices;
 
   HallModel({
     this.hallId,
-    required this.name,
-    required this.description,
-    required this.budget,
-    required this.capacity,
-    required this.address,
-    required this.phoneNumber,
-    required this.firstImage,
-    required this.secondImage,
-    required this.thirdImage,
-    required this.fourthImage,
-    required this.extraServices,
-    required this.adminId,
+    this.name,
+    this.description,
+    this.budget,
+    this.capacity,
+    this.address,
+    this.phoneNumber,
+    this.firstImage,
+    this.secondImage,
+    this.thirdImage,
+    this.fourthImage,
+    this.extraServices,
+    this.adminId,
   });
 
   factory HallModel.fromJson(Map<String, dynamic> json) => HallModel(
@@ -51,7 +51,7 @@ class HallModel {
         capacity: json["capacity"],
         address: json["address"],
         phoneNumber: json["phoneNumber"],
-        firstImage: json["FirstImage"],
+        firstImage: json["firstImage"],
         secondImage: json["secondImage"],
         thirdImage: json["thirdImage"],
         fourthImage: json["fourthImage"],
@@ -68,12 +68,12 @@ class HallModel {
         "capacity": capacity,
         "address": address,
         "phoneNumber": phoneNumber,
-        "FirstImage": firstImage,
+        "firstImage": firstImage,
         "secondImage": secondImage,
         "thirdImage": thirdImage,
         "fourthImage": fourthImage,
         "extraServices":
-            List<dynamic>.from(extraServices.map((x) => x.toJson())),
+            List<dynamic>.from(extraServices!.map((x) => x.toJson())),
       };
 }
 // {

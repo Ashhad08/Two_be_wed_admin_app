@@ -10,16 +10,16 @@ AdminModel adminModelFromJson(String str) =>
 String adminModelToJson(AdminModel data) => json.encode(data.toJson());
 
 class AdminModel {
-  String id;
-  String email;
-  String name;
-  String notificationToken;
+  String? id;
+  String? email;
+  String? name;
+  String? notificationToken;
 
   AdminModel({
-    required this.id,
-    required this.email,
-    required this.name,
-    required this.notificationToken,
+    this.id,
+    this.email,
+    this.name,
+    this.notificationToken,
   });
 
   factory AdminModel.fromJson(Map<String, dynamic> json) => AdminModel(

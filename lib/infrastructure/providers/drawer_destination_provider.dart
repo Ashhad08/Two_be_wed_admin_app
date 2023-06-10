@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:two_be_wedd/infrastructure/services/auth_services.dart';
 
 import '../../presentation/views/confirmed_orders_view/confirmed_orders_view.dart';
 import '../../presentation/views/dashboard_view/dashboard_view.dart';
@@ -16,13 +17,15 @@ class DrawerDestinationProvider extends ChangeNotifier {
       notifyListeners();
       switch (index) {
         case 0:
-          NavigationHelper.pushReplacement(context, const DashboardView());
+          NavigationHelper.pushReplacement(context, DashboardView());
         case 1:
           NavigationHelper.pushReplacement(context, const HallBookingsView());
         case 2:
           NavigationHelper.pushReplacement(
               context, const ConfirmedOrdersView());
       }
+    } else {
+      AuthServices().logOut(context);
     }
   }
 }

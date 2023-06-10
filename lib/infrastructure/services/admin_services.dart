@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:two_be_wedd/infrastructure/models/admin_model.dart';
@@ -48,13 +49,48 @@ class AdminServices {
     }
   }
 
-  Future<void> allHall(
+  Future<void> addHall(
       {required HallModel hallModel, required BuildContext context}) async {
     final loadingProvider = Provider.of<LoadingHelper>(context, listen: false);
 
     try {
       DocumentReference ref = BackEndConfigs.hallsCollectionsRef.doc();
       return await ref.set(hallModel.toJson(ref.id));
+    } on FirebaseException catch (e) {
+      loadingProvider.stateStatus(StateStatus.IsError);
+      Utils.showSnackBar(
+          context: context,
+          message: e.message ?? '',
+          color: Theme.of(context).colorScheme.error);
+      return;
+    }
+  }
+
+  Future<void> updateHall(
+      {required HallModel hallModel, required BuildContext context}) async {
+    final loadingProvider = Provider.of<LoadingHelper>(context, listen: false);
+
+    try {
+      return await BackEndConfigs.hallsCollectionsRef
+          .doc(hallModel.hallId)
+          .set(hallModel.toJson(hallModel.hallId!));
+    } on FirebaseException catch (e) {
+      loadingProvider.stateStatus(StateStatus.IsError);
+      Utils.showSnackBar(
+          context: context,
+          message: e.message ?? '',
+          color: Theme.of(context).colorScheme.error);
+      return;
+    }
+  }
+
+  Future<void> deleteHall(
+      {required String hallId, required BuildContext context}) async {
+    final loadingProvider = Provider.of<LoadingHelper>(context, listen: false);
+
+    try {
+      await FirebaseAuth.instance.signOut();
+      return await BackEndConfigs.hallsCollectionsRef.doc(hallId).delete();
     } on FirebaseException catch (e) {
       loadingProvider.stateStatus(StateStatus.IsError);
       Utils.showSnackBar(

@@ -28,6 +28,12 @@ class HallImagesProvider extends ChangeNotifier {
   String? get thirdImage => _thirdImage;
 
   String? get fourthImage => _fourthImage;
+
+  set firstImage(String? value) {
+    _firstImage = value;
+    notifyListeners();
+  }
+
   final StorageServices _storageServices = StorageServices();
 
   Future<void> hallFirstImage(BuildContext context,
@@ -67,6 +73,21 @@ class HallImagesProvider extends ChangeNotifier {
     _fourthImage = await _storageServices.uploadImage(
         source: source, context: context, imageNumber: 4);
     _fourthImageLoading = false;
+    notifyListeners();
+  }
+
+  set secondImage(String? value) {
+    _secondImage = value;
+    notifyListeners();
+  }
+
+  set thirdImage(String? value) {
+    _thirdImage = value;
+    notifyListeners();
+  }
+
+  set fourthImage(String? value) {
+    _fourthImage = value;
     notifyListeners();
   }
 }
