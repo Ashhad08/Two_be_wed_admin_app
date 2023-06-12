@@ -63,7 +63,6 @@ class _AddHallViewState extends State<AddHallView> {
     _photographyBudgetController.dispose();
     _cateringBudgetController.dispose();
     _decorationBudgetController.dispose();
-
     super.dispose();
   }
 
@@ -525,7 +524,7 @@ class _AddHallViewState extends State<AddHallView> {
               context: context)
           .then((value) {
         loadingProvider.stateStatus(StateStatus.IsFree);
-        NavigationHelper.pushReplacement(context, DashboardView());
+        NavigationHelper.pushReplacement(context,const DashboardView());
         Utils.showSnackBar(context: context, message: "Welcome");
       }).onError((error, stackTrace) {
         loadingProvider.stateStatus(StateStatus.IsError);

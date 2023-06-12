@@ -43,7 +43,7 @@ class _SplashViewBodyState extends State<SplashView> {
           // ignore: use_build_context_synchronously
           NavigationHelper.pushReplacement(
             context,
-            DashboardView(),
+            const DashboardView(),
           );
         } else {
           // ignore: use_build_context_synchronously

@@ -136,7 +136,7 @@ class _LoginViewState extends State<LoginView> {
             // ignore: use_build_context_synchronously
             NavigationHelper.pushReplacement(
               context,
-              DashboardView(),
+              const DashboardView(),
             );
             // ignore: use_build_context_synchronously
             Utils.showSnackBar(context: context, message: "Welcome");

@@ -13,13 +13,27 @@ import 'package:two_be_wedd/utils/extensions.dart';
 import 'package:two_be_wedd/utils/navigation_helper.dart';
 
 import '../../../infrastructure/services/admin_services.dart';
+import '../../../infrastructure/services/notifications_service.dart';
 import '../../../utils/utils.dart';
 import '../../elements/drawer.dart';
 import '../update_hall_view/update_hall_view.dart';
 
-class DashboardView extends StatelessWidget {
-  DashboardView({Key? key}) : super(key: key);
+class DashboardView extends StatefulWidget {
+  const DashboardView({Key? key}) : super(key: key);
+
+  @override
+  State<DashboardView> createState() => _DashboardViewState();
+}
+
+class _DashboardViewState extends State<DashboardView> {
   final SystemServices _systemServices = SystemServices();
+
+  @override
+  void initState() {
+    NotificationsService().notificationsClick(context);
+    NotificationsService().notificationsClickTerminated(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,75 +69,94 @@ class DashboardView extends StatelessWidget {
                             20.sH,
                             Row(
                               children: [
-                                Expanded(
-                                  child: Card(
-                                    margin: EdgeInsets.zero,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "Total\nBookings",
-                                                style:
-                                                    context.textTheme.bodyLarge,
-                                              ),
-                                              FaIcon(
-                                                FontAwesomeIcons.utensils,
-                                                color:
-                                                    context.colorScheme.primary,
-                                              ),
-                                            ],
-                                          ),
-                                          30.sH,
-                                          Text(
-                                            "30",
-                                            style: context.textTheme.titleLarge,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                10.sW,
-                                Expanded(
-                                  child: Card(
-                                    margin: EdgeInsets.zero,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  "Confirmed\nOrders",
-                                                  style: context
-                                                      .textTheme.bodyLarge,
+                                StreamProvider.value(
+                                    value:
+                                        _systemServices.fetchNumberOfBookings(
+                                            hallModel.hallId ?? ""),
+                                    initialData: 0,
+                                    builder: (context, child) {
+                                      return Expanded(
+                                        child: Card(
+                                          margin: EdgeInsets.zero,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      "Total\nBookings",
+                                                      style: context
+                                                          .textTheme.bodyLarge,
+                                                    ),
+                                                    FaIcon(
+                                                      FontAwesomeIcons.utensils,
+                                                      color: context
+                                                          .colorScheme.primary,
+                                                    ),
+                                                  ],
                                                 ),
-                                              ),
-                                              FaIcon(
-                                                FontAwesomeIcons.calendarCheck,
-                                                color:
-                                                    context.colorScheme.primary,
-                                              ),
-                                            ],
+                                                30.sH,
+                                                Text(
+                                                  "${context.watch<int>()}",
+                                                  style: context
+                                                      .textTheme.titleLarge,
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          30.sH,
-                                          Text(
-                                            "20",
-                                            style: context.textTheme.titleLarge,
+                                        ),
+                                      );
+                                    }),
+                                10.sW,
+                                StreamProvider.value(
+                                    value: _systemServices
+                                        .fetchNumberOfConfirmOrders(
+                                            hallModel.hallId ?? ""),
+                                    initialData: 0,
+                                    builder: (context, child) {
+                                      return Expanded(
+                                        child: Card(
+                                          margin: EdgeInsets.zero,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        "Confirmed\nOrders",
+                                                        style: context.textTheme
+                                                            .bodyLarge,
+                                                      ),
+                                                    ),
+                                                    FaIcon(
+                                                      FontAwesomeIcons
+                                                          .calendarCheck,
+                                                      color: context
+                                                          .colorScheme.primary,
+                                                    ),
+                                                  ],
+                                                ),
+                                                30.sH,
+                                                Text(
+                                                  "${context.watch<int>()}",
+                                                  style: context
+                                                      .textTheme.titleLarge,
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                        ),
+                                      );
+                                    }),
                               ],
                             )
                           ],
@@ -179,15 +212,11 @@ class HallCard extends StatelessWidget {
               scrollDirection: Axis.horizontal,
             ),
             items: hallImages.map((i) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Card(
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: CustomImage(image: i, fit: BoxFit.cover)),
-                  );
-                },
+              return Card(
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: CustomImage(image: i, fit: BoxFit.cover)),
               );
             }).toList(),
           ),

@@ -100,4 +100,26 @@ class AdminServices {
       return;
     }
   }
+
+  Future confirmOrder({
+    required BuildContext context,
+    required String bookingId,
+  }) async {
+    final loadingProvider = Provider.of<LoadingHelper>(context, listen: false);
+
+    try {
+      return await BackEndConfigs.hallBookingsCollectionRef
+          .doc(bookingId)
+          .update({
+        "isConfirmed": true,
+      });
+    } on FirebaseException catch (e) {
+      loadingProvider.stateStatus(StateStatus.IsError);
+      Utils.showSnackBar(
+          context: context,
+          message: e.message ?? '',
+          color: Theme.of(context).colorScheme.error);
+      return;
+    }
+  }
 }

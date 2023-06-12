@@ -17,12 +17,11 @@ class DrawerDestinationProvider extends ChangeNotifier {
       notifyListeners();
       switch (index) {
         case 0:
-          NavigationHelper.pushReplacement(context, DashboardView());
+          NavigationHelper.pushReplacement(context, const DashboardView());
         case 1:
-          NavigationHelper.pushReplacement(context, const HallBookingsView());
+          NavigationHelper.pushReplacement(context, HallBookingsView());
         case 2:
-          NavigationHelper.pushReplacement(
-              context, const ConfirmedOrdersView());
+          NavigationHelper.pushReplacement(context, ConfirmedOrdersView());
       }
     } else {
       AuthServices().logOut(context);

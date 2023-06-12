@@ -15,20 +15,22 @@ String hallBookingModelToJson(HallBookingModel data) =>
     json.encode(data.toJson(data.bookingId.toString()));
 
 class HallBookingModel {
-  String bookingId;
-  String hallId;
-  String bookedBy;
-  Timestamp bookingDateTime;
-  int totalBudget;
-  List<ExtraService> bookedExtraServices;
+  String? bookingId;
+  String? hallId;
+  String? bookedBy;
+  Timestamp? bookingDateTime;
+  num? totalBudget;
+  bool? isConfirmed;
+  List<ExtraService>? bookedExtraServices;
 
   HallBookingModel({
-    required this.bookingId,
-    required this.hallId,
-    required this.bookedBy,
-    required this.bookingDateTime,
-    required this.totalBudget,
-    required this.bookedExtraServices,
+    this.bookingId,
+    this.hallId,
+    this.bookedBy,
+    this.bookingDateTime,
+    this.totalBudget,
+    this.isConfirmed,
+    this.bookedExtraServices,
   });
 
   factory HallBookingModel.fromJson(Map<String, dynamic> json) =>
@@ -38,8 +40,11 @@ class HallBookingModel {
         bookedBy: json["bookedBy"],
         bookingDateTime: json["bookingDateTime"],
         totalBudget: json["totalBudget"],
-        bookedExtraServices: List<ExtraService>.from(
-            json["BookedExtraServices"].map((x) => ExtraService.fromJson(x))),
+        isConfirmed: json["isConfirmed"],
+        bookedExtraServices: json["bookedExtraServices"] == null
+            ? []
+            : List<ExtraService>.from(json["bookedExtraServices"]!
+                .map((x) => ExtraService.fromJson(x))),
       );
 
   Map<String, dynamic> toJson(String id) => {
@@ -48,16 +53,20 @@ class HallBookingModel {
         "bookedBy": bookedBy,
         "bookingDateTime": bookingDateTime,
         "totalBudget": totalBudget,
-        "BookedExtraServices":
-            List<dynamic>.from(bookedExtraServices.map((x) => x.toJson())),
+        "isConfirmed": isConfirmed,
+        "bookedExtraServices": bookedExtraServices == null
+            ? []
+            : List<dynamic>.from(bookedExtraServices!.map((x) => x.toJson())),
       };
 }
+
 // {
 // "bookingId" : "",
 // "hallId" : "",
 // "bookedBy" : "",
 // "bookingDateTime" : "",
 // "totalBudget" : 0,
+// "isConfirmed" : false,
 // "BookedExtraServices" : [
 // {
 // "name" : "",
