@@ -75,4 +75,29 @@ class AuthServices {
           color: Theme.of(context).colorScheme.error);
     });
   }
+
+  Future<void> sendPasswordResetEmail({
+    required String email,
+    required BuildContext context,
+  }) async {
+    final loadingProvider = Provider.of<LoadingHelper>(context, listen: false);
+    try {
+      return await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    } on FirebaseException catch (e) {
+      loadingProvider.stateStatus(StateStatus.IsError);
+      if (e.code == 'unknown') {
+        Utils.showSnackBar(
+            context: context,
+            message: 'Check your internet Connection',
+            color: Theme.of(context).colorScheme.error);
+        return;
+      } else {
+        Utils.showSnackBar(
+            context: context,
+            message: e.message ?? '',
+            color: Theme.of(context).colorScheme.error);
+        return;
+      }
+    }
+  }
 }

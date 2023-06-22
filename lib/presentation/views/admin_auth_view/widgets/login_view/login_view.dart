@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:two_be_wedd/presentation/views/forgot_password_view/forgot_password_view.dart';
 import 'package:two_be_wedd/utils/extensions.dart';
 
 import '../../../../../configs/front_end_configs.dart';
@@ -79,6 +80,15 @@ class _LoginViewState extends State<LoginView> {
                 }
                 return null;
               },
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  NavigationHelper.push(context, const ForgotPasswordView());
+                },
+                child: const Text("Forgot Password"),
+              ),
             ),
             30.sH,
             Align(
